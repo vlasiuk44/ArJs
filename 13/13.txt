@@ -1,0 +1,60 @@
+<!doctype HTML>
+<html>
+<head>
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+    <script src="https://raw.githack.com/jeromeetienne/AR.js/2.0.5/aframe/build/aframe-ar.js"></script>
+    <style>
+      #scoreBoard {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #fff;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 9999; 
+      }
+    </style>
+</head>
+
+<body style='margin: 0; overflow: hidden;'>
+    
+    <div id="scoreBoard">Score: 0</div>
+
+    <a-scene embedded arjs>
+        <a-marker preset="hiro" id="marker">
+            <a-sphere
+                id="randomSphere"
+                color="blue"
+                radius="0.1"
+                position="0 0 0"
+            ></a-sphere>
+        </a-marker>
+        <a-entity camera></a-entity>
+        <a-entity id="cursor" cursor="fuse: false; rayOrigin: mouse" position="0 0 -1">
+        </a-entity>
+    </a-scene>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const randomSphere = document.querySelector('#randomSphere');
+            const scoreBoard   = document.querySelector('#scoreBoard');
+            let score = 0;
+
+            function setRandomPosition() {
+                const x = (Math.random() - 0.5).toFixed(2);      // будет от -0.50 до 0.50
+                const y = (0.1 + Math.random() * 0.7).toFixed(2); // будет от 0.10 до 0.80
+                const z = (Math.random() - 0.5).toFixed(2);      // будет от -0.50 до 0.50
+                randomSphere.setAttribute('position', ${x} ${y} ${z});
+            }
+
+            randomSphere.addEventListener('click', function () {
+                score += 100;
+                
+                scoreBoard.textContent = Score: ${score};
+                
+                setRandomPosition();
+            });
+        });
+    </script>
+</body>
+</html>
