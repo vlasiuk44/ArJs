@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A-Frame AR.js - Load Object on Proximity</title>
+  <!-- Подключаем A-Frame -->
+  <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+  <!-- Подключаем AR.js для A-Frame -->
+  <script src="https://raw.githack.com/jeromeetienne/AR.js/2.0.5/aframe/build/aframe-ar.js"></script>
+
+  <script>
+    // Регистрируем пользовательский компонент, отвечающий за проверку дистанции
+    AFRAME.registerComponent('proximity-loader', {
+      schema: {
+        distanceThreshold: { type: 'number', default: 0.1 }, // Радиус триггера
+        src: { type: 'string' },                           // Путь к модели
+      },
+      init: function () {
+        // Скрываем элемент по умолчанию
+        this.el.setAttribute('visible', false);
+
+        // Флаг, указывающий, что модель была загружена
+        this.modelLoaded = false;
+      },
+      tick: function () {
+        // Находим камеру в сцене
+        const cameraEl = this.el.sceneEl.querySelector('[camera]');
+        if (!cameraEl) return;
+
+        // Получаем позицию камеры
+        const cameraPos = new THREE.Vector3().copy(cameraEl.object3D.position);
+
+        // Получаем позицию «якоря»
+        const anchorPos = new THREE.Vector3().copy(this.el.object3D.position);
+
+        // Считаем расстояние между камерой и якорем
+        const distance = cameraPos.distanceTo(anchorPos);
+
+        // Если мы оказались достаточно близко
+        if (distance < this.data.distanceThreshold) {
+          // Загрузим модель, если ещё не загружали
+          if (!this.modelLoaded) {
+            this.el.setAttribute('gltf-model', this.data.src);
+            this.modelLoaded = true;
+          }
+          // Показываем объект
+          this.el.setAttribute('visible', true);
+        } else {
+          // Скрываем объект, если далеко
+          this.el.setAttribute('visible', false);
+        }
+      }
+    });
+  </script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+    <!-- Пресет маркера (hiro) -->
+    <a-marker preset="hiro">
+      <!-- Элемент якоря с компонентом proximity-loader -->
+      <a-entity
+        proximity-loader="distanceThreshold: 0.1; src: model.glb;"
+        scale="0.5 0.5 0.5"
+        position="0 0 0">
+      </a-entity>
+    </a-marker>
+
+    <!-- Камера -->
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>

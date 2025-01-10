@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AR Solar System (Smaller Scale with Moons)</title>
+  <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+  <script src="https://raw.githack.com/jeromeetienne/AR.js/2.0.5/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+<a-scene embedded arjs>
+ 
+  <a-marker preset="hiro">
+    <a-entity>
+
+      <a-sphere
+        color="yellow"
+        radius="0.2"
+        position="0 0 0"
+        segments-width="32"
+        segments-height="32">
+      </a-sphere>
+
+      <a-entity
+        animation="property: rotation; to: 0 360 0; dur: 5000; loop: true; easing: linear">
+        <a-sphere
+          color="gray"
+          radius="0.03"
+          position="0.33 0 0">
+        </a-sphere>
+      </a-entity>
+
+      <a-entity
+        animation="property: rotation; to: 0 360 0; dur: 7000; loop: true; easing: linear">
+        <!-- Позиция ближе, радиус тоже меньше -->
+        <a-sphere
+          color="#c2b280"
+          radius="0.05"
+          position="0.5 0 0">
+        </a-sphere>
+      </a-entity>
+
+      <a-entity
+        animation="property: rotation; to: 0 360 0; dur: 10000; loop: true; easing: linear">
+        <a-sphere
+          color="blue"
+          radius="0.07"
+          position="0.66 0 0">
+        </a-sphere>
+
+        <a-entity
+          animation="property: rotation; to: 0 360 0; dur: 3000; loop: true; easing: linear">
+          <!-- Смещаем Луну от центра Земли, делаем её очень маленькой -->
+          <a-sphere
+            color="#aaa"
+            radius="0.02"
+            position="0.1 0 0">
+          </a-sphere>
+        </a-entity>
+      </a-entity>
+
+      <a-entity
+        animation="property: rotation; to: 0 360 0; dur: 12000; loop: true; easing: linear">
+        <!-- Марс -->
+        <a-sphere
+          color="red"
+          radius="0.06"
+          position="0.83 0 0">
+        </a-sphere>
+
+
+        <a-entity
+          animation="property: rotation; to: 0 360 0; dur: 2500; loop: true; easing: linear">
+          <a-sphere
+            color="#888"
+            radius="0.01"
+            position="0.09 0 0">
+          </a-sphere>
+        </a-entity>
+
+
+        <a-entity
+          animation="property: rotation; to: 0 -360 0; dur: 4000; loop: true; easing: linear">
+          <a-sphere
+            color="#aaa"
+            radius="0.01"
+            position="0.13 0 0">
+          </a-sphere>
+        </a-entity>
+      </a-entity>
+
+      <!-- САТУРН -->
+      <a-entity
+        animation="property: rotation; to: 0 360 0; dur: 16000; loop: true; easing: linear">
+        <!-- Сатурн -->
+        <a-sphere
+          color="#d2b48c"
+          radius="0.1"
+          position="1.16 0 0">
+        </a-sphere>
+        <!-- Кольцо  -->
+        <a-cylinder
+          color="#b8860b"
+          position="1.16 0 0"
+          rotation="90 0 0"
+          radius="0.15"
+          height="0.008">
+        </a-cylinder>
+      </a-entity>
+
+
+    </a-entity>
+  </a-marker>
+  <a-entity camera></a-entity>
+</a-scene>
+</body>
+</html>
